@@ -284,7 +284,7 @@ function updateGoalsChart() {
   });
 }
 
-// Gráfico mini de balanço para o dashboard
+// Gráfico de balanço financeiro para o dashboard
 function renderDashboardFinanceChart() {
   const canvas = document.getElementById('dashboard-finance-chart');
   if (!canvas || !isChartJsAvailable()) return;
@@ -295,30 +295,59 @@ function renderDashboardFinanceChart() {
   const data = getLast6MonthsData ? getLast6MonthsData() : [];
 
   new Chart(canvas, {
-    type: 'line',
+    type: 'bar',
     data: {
       labels: data.map(d => d.label),
-      datasets: [{
-        label: 'Balanço',
-        data: data.map(d => d.income - d.expense),
-        borderColor: '#10b981',
-        backgroundColor: 'rgba(16, 185, 129, 0.1)',
-        borderWidth: 2,
-        fill: true,
-        tension: 0.4,
-        pointBackgroundColor: '#10b981',
-        pointRadius: 4
-      }]
+      datasets: [
+        {
+          label: 'Receitas',
+          data: data.map(d => d.income),
+          backgroundColor: '#10b98155',
+          borderColor: '#10b981',
+          borderWidth: 2,
+          borderRadius: 4,
+          order: 2
+        },
+        {
+          label: 'Despesas',
+          data: data.map(d => d.expense),
+          backgroundColor: '#ef444455',
+          borderColor: '#ef4444',
+          borderWidth: 2,
+          borderRadius: 4,
+          order: 2
+        },
+        {
+          label: 'Saldo',
+          data: data.map(d => d.income - d.expense),
+          type: 'line',
+          borderColor: '#7c3aed',
+          backgroundColor: 'rgba(124, 58, 237, 0.1)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4,
+          pointBackgroundColor: '#7c3aed',
+          pointRadius: 4,
+          order: 1
+        }
+      ]
     },
     options: {
       responsive: true,
-      maintainAspectRatio: true,
-      plugins: { legend: { display: false } },
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          labels: { color: '#e2e8f0', font: { size: 11 }, usePointStyle: true, padding: 12 }
+        },
+        tooltip: {
+          callbacks: { label: ctx => ` ${ctx.dataset.label}: ${formatCurrency(ctx.parsed.y)}` }
+        }
+      },
       scales: {
-        x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { display: false } },
+        x: { ticks: { color: '#94a3b8', font: { size: 11 } }, grid: { display: false } },
         y: {
           ticks: { color: '#94a3b8', font: { size: 10 }, callback: v => formatCurrency(v) },
-          grid: { color: 'rgba(255,255,255,0.05)' }
+          grid: { color: 'rgba(255,255,255,0.06)' }
         }
       }
     }

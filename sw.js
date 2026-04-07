@@ -1,5 +1,5 @@
 // Service Worker - ZennBR PWA
-const CACHE_NAME = 'zennbr-v1.0';
+const CACHE_NAME = 'zennbr-v1.1';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -11,7 +11,6 @@ const STATIC_ASSETS = [
   '/js/calendar.js',
   '/js/finance.js',
   '/js/goals.js',
-  '/js/ai-coach.js',
   '/js/charts.js',
   '/js/pomodoro.js',
   '/js/app.js',
@@ -45,11 +44,6 @@ self.addEventListener('activate', event => {
 // Fetch: estratégia cache-first para assets, network-first para API
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
-
-  // Ignora requisições à API OpenAI (sempre network)
-  if (url.hostname === 'api.openai.com') {
-    return;
-  }
 
   // Ignora requisições a CDNs externas (usa network com fallback)
   if (url.hostname !== self.location.hostname && url.hostname !== 'localhost') {
