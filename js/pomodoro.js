@@ -308,7 +308,7 @@ function onPomodoroComplete(skipped = false) {
 // Envia notificação do navegador
 function notifyPomodoroEnd(message) {
   if ('Notification' in window && Notification.permission === 'granted') {
-    new Notification('ZennBR Pomodoro', { body: message, icon: '/manifest.json' });
+    new Notification('ZennBR Pomodoro', { body: message });
   }
 }
 

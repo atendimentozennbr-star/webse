@@ -61,7 +61,7 @@ function exportAllData() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `webse_backup_${formatDateForInput(new Date())}.json`;
+  a.download = `zennbr_backup_${formatDateForInput(new Date())}.json`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
