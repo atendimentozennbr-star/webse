@@ -1,0 +1,41 @@
+{
+  "name": "ZennBR - Autogerenciamento",
+  "short_name": "ZennBR",
+  "description": "Sistema de autogerenciamento pessoal e empresarial com IA integrada",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0f0e17",
+  "theme_color": "#7c3aed",
+  "lang": "pt-BR",
+  "categories": ["productivity", "lifestyle", "finance"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%237c3aed'/><text x='50%' y='55%' font-size='120' text-anchor='middle' dominant-baseline='middle'>⚡</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='80' fill='%237c3aed'/><text x='50%' y='55%' font-size='320' text-anchor='middle' dominant-baseline='middle'>⚡</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Nova Tarefa",
+      "short_name": "Tarefa",
+      "description": "Criar uma nova tarefa",
+      "url": "/?section=tasks"
+    },
+    {
+      "name": "Pomodoro",
+      "short_name": "Timer",
+      "description": "Iniciar o timer Pomodoro",
+      "url": "/?section=pomodoro"
+    }
+  ]
+}

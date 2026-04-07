@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ZennBR - Sistema de autogerenciamento pessoal e empresarial com IA">
+  <meta name="theme-color" content="#7c3aed">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>ZennBR - Autogerenciamento</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-layout">
+  <!-- ===== SIDEBAR ===== -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="logo-icon">⚡</div>
+        <span class="logo-text">ZennBR</span>
+      </div>
+      <button class="sidebar-toggle" onclick="toggleSidebar()" title="Recolher menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="sidebar-nav">
+      <button class="nav-item" data-section="dashboard" onclick="navigateTo('dashboard')">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+        </span>
+        <span class="nav-label">Dashboard</span>
+      </button>
+
+      <button class="nav-item" data-section="tasks" onclick="navigateTo('tasks')">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+        </span>
+        <span class="nav-label">Tarefas</span>
+      </button>
+
+      <button class="nav-item" data-section="habits" onclick="navigateTo('habits')">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+          </svg>
+        </span>
+        <span class="nav-label">Hábitos</span>
+      </button>
+
+      <button class="nav-item" data-section="calendar" onclick="navigateTo('calendar')">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+        </span>
+        <span class="nav-label">Calendário</span>
+      </button>
+
+      <button class="nav-item" data-section="finance" onclick="navigateTo('finance')">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="1" x2="12" y2="23"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+        </span>
+        <span class="nav-label">Finanças</span>
+      </button>
+
+      <button class="nav-item" data-section="goals" onclick="navigateTo('goals')">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="6"></circle>
+            <circle cx="12" cy="12" r="2"></circle>
+          </svg>
+        </span>
+        <span class="nav-label">Metas</span>
+      </button>
+
+      <button class="nav-item" data-section="pomodoro" onclick="navigateTo('pomodoro')">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </span>
+        <span class="nav-label">Pomodoro</span>
+      </button>
+
+      <button class="nav-item" data-section="ai-coach" onclick="navigateTo('ai-coach')">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+        </span>
+        <span class="nav-label">AI Coach</span>
+      </button>
+    </div>
+
+    <div class="sidebar-footer">
+      <button class="nav-item" data-section="settings" onclick="navigateTo('settings')">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.07 4.93l-1.41 1.41M17.66 17.66l1.41 1.41M4.93 4.93l1.41 1.41M6.34 17.66l-1.41 1.41M20 12h2M2 12h2M12 2v2M12 20v2"></path>
+          </svg>
+        </span>
+        <span class="nav-label">Configurações</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+  <div id="main-content">
+    <!-- Header -->
+    <header class="main-header">
+      <div class="header-left">
+        <button id="mobile-menu-btn" title="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="header-right">
+        <button class="header-btn" onclick="toggleTheme()" title="Alternar tema">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <span>Tema</span>
+        </button>
+        <button class="header-btn" onclick="exportAllData()" title="Exportar dados">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Exportar</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Sections -->
+    <main class="sections-container">
+
+      <!-- DASHBOARD -->
+      <section id="section-dashboard" class="section">
+        <div id="dashboard-content">
+          <div class="empty-state">
+            <div class="empty-icon">⚡</div>
+            <p>Carregando dashboard...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAREFAS -->
+      <section id="section-tasks" class="section">
+        <div id="tasks-container">
+          <div class="empty-state">
+            <div class="empty-icon">📋</div>
+            <p>Carregando tarefas...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- HÁBITOS -->
+      <section id="section-habits" class="section">
+        <div id="habits-container">
+          <div class="empty-state">
+            <div class="empty-icon">⭐</div>
+            <p>Carregando hábitos...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CALENDÁRIO -->
+      <section id="section-calendar" class="section">
+        <div id="calendar-container">
+          <div class="empty-state">
+            <div class="empty-icon">📅</div>
+            <p>Carregando calendário...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FINANÇAS -->
+      <section id="section-finance" class="section">
+        <div id="finance-container">
+          <div class="empty-state">
+            <div class="empty-icon">💰</div>
+            <p>Carregando finanças...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- METAS -->
+      <section id="section-goals" class="section">
+        <div id="goals-container">
+          <div class="empty-state">
+            <div class="empty-icon">🎯</div>
+            <p>Carregando metas...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- POMODORO -->
+      <section id="section-pomodoro" class="section">
+        <div id="pomodoro-container">
+          <div class="empty-state">
+            <div class="empty-icon">🍅</div>
+            <p>Carregando Pomodoro...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI COACH -->
+      <section id="section-ai-coach" class="section">
+        <div id="ai-coach-container">
+          <div class="empty-state">
+            <div class="empty-icon">🤖</div>
+            <p>Carregando AI Coach...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONFIGURAÇÕES -->
+      <section id="section-settings" class="section">
+        <div id="settings-container">
+          <div class="empty-state">
+            <div class="empty-icon">⚙️</div>
+            <p>Carregando configurações...</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ===== MODALS ===== -->
+
+<!-- Modal de Tarefa -->
+<div class="modal-overlay" id="task-modal" onclick="if(event.target===this)closeTaskModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="task-modal-title">Nova Tarefa</h3>
+      <button class="modal-close" onclick="closeTaskModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Título *</label>
+        <input type="text" class="filter-input" id="task-title-input" placeholder="Título da tarefa" maxlength="200">
+      </div>
+      <div class="form-group">
+        <label>Descrição</label>
+        <textarea id="task-desc-input" placeholder="Descrição opcional..." rows="3"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Prioridade</label>
+          <select class="filter-select" id="task-priority-input">
+            <option value="high">🔴 Alta</option>
+            <option value="medium" selected>🟡 Média</option>
+            <option value="low">🟢 Baixa</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select class="filter-select" id="task-status-input">
+            <option value="pending" selected>Pendente</option>
+            <option value="in-progress">Em andamento</option>
+            <option value="done">Concluída</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Categoria</label>
+          <select class="filter-select" id="task-category-input">
+            <option>Trabalho</option>
+            <option>Pessoal</option>
+            <option>Saúde</option>
+            <option>Educação</option>
+            <option>Financeiro</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Data de vencimento</label>
+          <input type="date" class="filter-input" id="task-duedate-input">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeTaskModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveTask()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Hábito -->
+<div class="modal-overlay" id="habit-modal" onclick="if(event.target===this)closeHabitModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="habit-modal-title">Novo Hábito</h3>
+      <button class="modal-close" onclick="closeHabitModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Nome *</label>
+        <input type="text" class="filter-input" id="habit-name-input" placeholder="Nome do hábito" maxlength="100">
+      </div>
+      <div class="form-group">
+        <label>Descrição</label>
+        <textarea id="habit-desc-input" placeholder="Descrição opcional..." rows="2"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Frequência</label>
+        <select class="filter-select" id="habit-frequency-input">
+          <option value="daily">Diário</option>
+          <option value="weekly">Semanal</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Ícone</label>
+        <div class="icon-picker" id="habit-icon-picker"></div>
+        <input type="hidden" id="selected-habit-icon" value="💪">
+      </div>
+      <div class="form-group">
+        <label>Cor</label>
+        <div class="color-picker" id="habit-color-picker"></div>
+        <input type="hidden" id="selected-habit-color" value="#7c3aed">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeHabitModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveHabit()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Evento -->
+<div class="modal-overlay" id="event-modal" onclick="if(event.target===this)closeEventModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="event-modal-title">Novo Evento</h3>
+      <button class="modal-close" onclick="closeEventModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Título *</label>
+        <input type="text" class="filter-input" id="event-title-input" placeholder="Título do evento" maxlength="200">
+      </div>
+      <div class="form-group">
+        <label>Descrição</label>
+        <textarea id="event-desc-input" placeholder="Detalhes do evento..." rows="2"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Data *</label>
+          <input type="date" class="filter-input" id="event-date-input">
+        </div>
+        <div class="form-group">
+          <label>Horário</label>
+          <input type="time" class="filter-input" id="event-time-input">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Tipo</label>
+        <select class="filter-select" id="event-type-input">
+          <option value="appointment">Compromisso</option>
+          <option value="task">Tarefa</option>
+          <option value="reminder">Lembrete</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Cor</label>
+        <div class="color-picker" id="event-color-picker"></div>
+        <input type="hidden" id="selected-event-color" value="#7c3aed">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeEventModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveEvent()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Transação -->
+<div class="modal-overlay" id="transaction-modal" onclick="if(event.target===this)closeTransactionModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="transaction-modal-title">Nova Transação</h3>
+      <button class="modal-close" onclick="closeTransactionModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Tipo</label>
+        <select class="filter-select" id="tx-type-input">
+          <option value="expense">💸 Despesa</option>
+          <option value="income">💰 Receita</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Valor (R$) *</label>
+          <input type="number" class="filter-input" id="tx-amount-input" placeholder="0,00" min="0.01" step="0.01">
+        </div>
+        <div class="form-group">
+          <label>Data *</label>
+          <input type="date" class="filter-input" id="tx-date-input">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Categoria</label>
+        <select class="filter-select" id="tx-category-input">
+          <option>Moradia</option>
+          <option>Alimentação</option>
+          <option>Transporte</option>
+          <option>Lazer</option>
+          <option>Educação</option>
+          <option>Saúde</option>
+          <option>Outros</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Descrição</label>
+        <input type="text" class="filter-input" id="tx-desc-input" placeholder="Descrição opcional..." maxlength="200">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeTransactionModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveTransaction()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Meta -->
+<div class="modal-overlay" id="goal-modal" onclick="if(event.target===this)closeGoalModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="goal-modal-title">Nova Meta</h3>
+      <button class="modal-close" onclick="closeGoalModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Título *</label>
+        <input type="text" class="filter-input" id="goal-title-input" placeholder="Título da meta" maxlength="200">
+      </div>
+      <div class="form-group">
+        <label>Descrição</label>
+        <textarea id="goal-desc-input" placeholder="Descrição da meta..." rows="2"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Tipo</label>
+          <select class="filter-select" id="goal-type-input">
+            <option value="personal">Pessoal</option>
+            <option value="financial">Financeiro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Categoria</label>
+          <select class="filter-select" id="goal-category-input">
+            <option>Saúde</option>
+            <option>Carreira</option>
+            <option>Financeiro</option>
+            <option>Educação</option>
+            <option>Pessoal</option>
+            <option>Relacionamentos</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Valor alvo *</label>
+          <input type="number" class="filter-input" id="goal-target-input" placeholder="Ex: 100" min="0.01" step="any">
+        </div>
+        <div class="form-group">
+          <label>Valor atual</label>
+          <input type="number" class="filter-input" id="goal-current-input" placeholder="0" min="0" step="any" value="0">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group" id="goal-unit-field">
+          <label>Unidade</label>
+          <input type="text" class="filter-input" id="goal-unit-input" placeholder="Ex: %, km, livros" maxlength="20" value="%">
+        </div>
+        <div class="form-group">
+          <label>Prazo</label>
+          <input type="date" class="filter-input" id="goal-deadline-input">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeGoalModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveGoal()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
+<!-- PWA Install Banner -->
+<div id="install-banner">
+  <span class="logo-icon">⚡</span>
+  <span class="install-banner-text">
+    <strong>Instale o ZennBR</strong> no seu dispositivo para acesso rápido!
+  </span>
+  <button class="btn btn-primary" onclick="installPWA()">Instalar</button>
+  <button class="btn btn-outline" onclick="dismissInstallBanner()">Depois</button>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/tasks.js"></script>
+<script src="js/habits.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/finance.js"></script>
+<script src="js/goals.js"></script>
+<script src="js/pomodoro.js"></script>
+<script src="js/ai-coach.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+  // Registra o Service Worker para PWA
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(() => {
+        // Falha silenciosa ao rodar via file://
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
