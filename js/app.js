@@ -395,31 +395,52 @@ function renderDashboardTasksDonut(taskStats) {
 
   if (total === 0) {
     const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#64748b';
-    ctx.font = '12px sans-serif';
+    ctx.font = '11px Inter, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('Sem dados', canvas.width / 2, canvas.height / 2);
     return;
   }
 
+  const pct = Math.round((done / total) * 100);
+
   new Chart(canvas, {
     type: 'doughnut',
+    plugins: [centerTextPlugin],
     data: {
       labels: ['Concluídas', 'Pendentes', 'Em andamento'],
       datasets: [{
         data: [done, pending, inProgress],
-        backgroundColor: ['#10b981cc', '#f59e0bcc', '#3b82f6cc'],
+        backgroundColor: ['rgba(16, 185, 129, 0.7)', 'rgba(245, 158, 11, 0.7)', 'rgba(59, 130, 246, 0.7)'],
         borderColor: ['#10b981', '#f59e0b', '#3b82f6'],
-        borderWidth: 2
+        borderWidth: 2,
+        hoverOffset: 6,
+        spacing: 2
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: true,
-      cutout: '65%',
+      animation: { duration: 800, easing: 'easeOutQuart' },
+      cutout: '70%',
       plugins: {
+        centerText: {
+          text: `${pct}%`,
+          fontSize: 16,
+          color: pct >= 70 ? '#10b981' : pct >= 40 ? '#f59e0b' : '#e2e8f0'
+        },
         legend: { display: false },
-        tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed}` } }
+        tooltip: {
+          backgroundColor: 'rgba(15, 14, 23, 0.9)',
+          titleColor: '#e2e8f0',
+          bodyColor: '#94a3b8',
+          borderColor: 'rgba(124, 58, 237, 0.3)',
+          borderWidth: 1,
+          cornerRadius: 8,
+          padding: 8,
+          callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed}` }
+        }
       }
     }
   });
@@ -437,31 +458,53 @@ function renderDashboardHabitsDonut(habitSummary) {
 
   if (done === 0 && remaining === 0) {
     const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#64748b';
-    ctx.font = '12px sans-serif';
+    ctx.font = '11px Inter, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('Sem dados', canvas.width / 2, canvas.height / 2);
     return;
   }
 
+  const total = done + remaining;
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
   new Chart(canvas, {
     type: 'doughnut',
+    plugins: [centerTextPlugin],
     data: {
       labels: ['Feitos', 'Restantes'],
       datasets: [{
         data: [done, remaining],
-        backgroundColor: ['#7c3aedcc', 'rgba(255,255,255,0.08)'],
-        borderColor: ['#7c3aed', 'rgba(255,255,255,0.15)'],
-        borderWidth: 2
+        backgroundColor: ['rgba(124, 58, 237, 0.7)', 'rgba(255, 255, 255, 0.06)'],
+        borderColor: ['#7c3aed', 'rgba(255, 255, 255, 0.12)'],
+        borderWidth: 2,
+        hoverOffset: 6,
+        spacing: 2
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: true,
-      cutout: '65%',
+      animation: { duration: 800, easing: 'easeOutQuart' },
+      cutout: '70%',
       plugins: {
+        centerText: {
+          text: `${pct}%`,
+          fontSize: 16,
+          color: pct >= 70 ? '#10b981' : pct >= 40 ? '#a78bfa' : '#e2e8f0'
+        },
         legend: { display: false },
-        tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed}` } }
+        tooltip: {
+          backgroundColor: 'rgba(15, 14, 23, 0.9)',
+          titleColor: '#e2e8f0',
+          bodyColor: '#94a3b8',
+          borderColor: 'rgba(124, 58, 237, 0.3)',
+          borderWidth: 1,
+          cornerRadius: 8,
+          padding: 8,
+          callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed}` }
+        }
       }
     }
   });
@@ -478,31 +521,60 @@ function renderDashboardExpensesDonut() {
 
   if (data.length === 0) {
     const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#64748b';
-    ctx.font = '12px sans-serif';
+    ctx.font = '11px Inter, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('Sem dados', canvas.width / 2, canvas.height / 2);
     return;
   }
 
+  const total = data.reduce((s, d) => s + d.total, 0);
+
   new Chart(canvas, {
     type: 'doughnut',
+    plugins: [centerTextPlugin],
     data: {
       labels: data.map(d => d.category),
       datasets: [{
         data: data.map(d => d.total),
-        backgroundColor: CHART_COLORS.map(c => c + 'cc'),
+        backgroundColor: CHART_COLORS.map(c => c + 'aa'),
         borderColor: CHART_COLORS,
-        borderWidth: 2
+        borderWidth: 2,
+        hoverOffset: 6,
+        spacing: 2
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: true,
-      cutout: '65%',
+      animation: { duration: 800, easing: 'easeOutQuart' },
+      cutout: '70%',
       plugins: {
+        centerText: {
+          text: data.length.toString(),
+          fontSize: 18,
+          color: '#e2e8f0',
+          subText: 'categorias',
+          subColor: '#64748b',
+          subFontSize: 9
+        },
         legend: { display: false },
-        tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${formatCurrency(ctx.parsed)}` } }
+        tooltip: {
+          backgroundColor: 'rgba(15, 14, 23, 0.9)',
+          titleColor: '#e2e8f0',
+          bodyColor: '#94a3b8',
+          borderColor: 'rgba(124, 58, 237, 0.3)',
+          borderWidth: 1,
+          cornerRadius: 8,
+          padding: 8,
+          callbacks: {
+            label: ctx => {
+              const pct = ((ctx.parsed / total) * 100).toFixed(1);
+              return ` ${ctx.label}: ${formatCurrency(ctx.parsed)} (${pct}%)`;
+            }
+          }
+        }
       }
     }
   });

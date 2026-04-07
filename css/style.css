@@ -1058,32 +1058,49 @@ body::before {
 }
 
 .chart-container {
-  min-height: 280px;
+  min-height: 300px;
   display: flex;
   flex-direction: column;
+  transition: var(--transition);
+}
+
+.chart-container:hover {
+  border-color: rgba(124, 58, 237, 0.2);
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.08);
 }
 
 .chart-container h3 {
   font-size: 14px;
   font-weight: 600;
   color: var(--text-secondary);
-  margin-bottom: 16px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chart-container h3::before {
+  content: '';
+  width: 3px;
+  height: 16px;
+  background: var(--gradient-purple);
+  border-radius: 2px;
 }
 
 .chart-wrapper {
   flex: 1;
   position: relative;
-  max-height: 240px;
+  max-height: 260px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.chart-wrapper canvas { max-height: 240px; }
+.chart-wrapper canvas { max-height: 260px; }
 
 .chart-wrapper-tall {
   position: relative;
-  height: 200px;
+  height: 220px;
 }
 
 .transactions-section { }
@@ -1203,14 +1220,31 @@ body::before {
 
 .goals-chart-container {
   margin-bottom: 20px;
-  min-height: 260px;
+  min-height: 280px;
+  transition: var(--transition);
+}
+
+.goals-chart-container:hover {
+  border-color: rgba(124, 58, 237, 0.2);
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.08);
 }
 
 .goals-chart-container h3 {
   font-size: 14px;
   font-weight: 600;
   color: var(--text-secondary);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.goals-chart-container h3::before {
+  content: '';
+  width: 3px;
+  height: 16px;
+  background: var(--gradient-purple);
+  border-radius: 2px;
 }
 
 .goals-section-title {
@@ -1711,14 +1745,20 @@ body::before {
 }
 
 .dash-chart-card {
-  padding: 20px;
+  padding: 22px;
+  transition: var(--transition);
+}
+
+.dash-chart-card:hover {
+  border-color: rgba(124, 58, 237, 0.2);
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.08);
 }
 
 .dash-chart-title {
   font-size: 14px;
   font-weight: 600;
   color: var(--text-secondary);
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1731,7 +1771,7 @@ body::before {
 }
 
 .dash-chart-wrapper {
-  height: 200px;
+  height: 220px;
   position: relative;
 }
 
@@ -1744,27 +1784,33 @@ body::before {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  gap: 12px;
-  padding: 10px 0;
+  gap: 16px;
+  padding: 14px 0;
 }
 
 .dash-donut-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  transition: var(--transition);
+}
+
+.dash-donut-item:hover {
+  transform: scale(1.05);
 }
 
 .dash-donut-item canvas {
-  width: 110px !important;
-  height: 110px !important;
+  width: 115px !important;
+  height: 115px !important;
 }
 
 .dash-donut-label {
   font-size: 11px;
   color: var(--text-muted);
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
+  letter-spacing: 0.02em;
 }
 
 /* Today Row - Tasks + Goals side by side */
