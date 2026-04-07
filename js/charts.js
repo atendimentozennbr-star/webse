@@ -214,6 +214,14 @@ function updateHabitChart(habits, logs) {
   });
 }
 
+// Retorna cor baseada no valor de progresso percentual
+function getProgressColor(value) {
+  if (value >= 100) return '#10b981';
+  if (value >= 70) return '#3b82f6';
+  if (value >= 40) return '#f59e0b';
+  return '#ef4444';
+}
+
 // Gráfico de barras horizontais: progresso das metas
 function updateGoalsChart() {
   const canvas = document.getElementById('goals-chart');
@@ -242,12 +250,8 @@ function updateGoalsChart() {
       datasets: [{
         label: 'Progresso (%)',
         data: progressValues,
-        backgroundColor: progressValues.map(v =>
-          v >= 100 ? '#10b98166' : v >= 70 ? '#3b82f666' : v >= 40 ? '#f59e0b66' : '#ef444466'
-        ),
-        borderColor: progressValues.map(v =>
-          v >= 100 ? '#10b981' : v >= 70 ? '#3b82f6' : v >= 40 ? '#f59e0b' : '#ef4444'
-        ),
+        backgroundColor: progressValues.map(v => getProgressColor(v) + '66'),
+        borderColor: progressValues.map(v => getProgressColor(v)),
         borderWidth: 2,
         borderRadius: 6
       }]

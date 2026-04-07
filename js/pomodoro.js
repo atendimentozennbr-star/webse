@@ -91,7 +91,7 @@ function renderPomodoroSection() {
 
           <div class="pomodoro-session-count">
             ${Array.from({ length: pomodoroSettings.sessionsBeforeLong }, (_, i) => `
-              <div class="session-dot ${i < pomodoroState.sessionCount % pomodoroSettings.sessionsBeforeLong || (pomodoroState.sessionCount % pomodoroSettings.sessionsBeforeLong === 0 && pomodoroState.sessionCount > 0) ? 'filled' : ''}"></div>
+              <div class="session-dot ${isSessionDotFilled(i) ? 'filled' : ''}"></div>
             `).join('')}
           </div>
         </div>
@@ -150,6 +150,13 @@ function renderPomodoroSection() {
       </div>
     </div>
   `;
+}
+
+// Determina se o ponto de sessão deve estar preenchido
+function isSessionDotFilled(dotIndex) {
+  const completedInCycle = pomodoroState.sessionCount % pomodoroSettings.sessionsBeforeLong;
+  const cycleComplete = completedInCycle === 0 && pomodoroState.sessionCount > 0;
+  return dotIndex < completedInCycle || cycleComplete;
 }
 
 // Retorna offset SVG para o progresso circular

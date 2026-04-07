@@ -2485,12 +2485,12 @@ body::before {
   50% { text-shadow: 0 0 20px rgba(0, 255, 136, 1), 0 0 40px rgba(0, 255, 136, 0.5); }
 }
 
-/* Barras de progresso com animação */
+/* Barras de progresso com animação de entrada */
 .progress-fill {
-  animation: progressGrow 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: progressGrow 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 @keyframes progressGrow {
-  from { width: 0 !important; }
-  to { }
+  from { transform: scaleX(0); transform-origin: left; }
+  to { transform: scaleX(1); transform-origin: left; }
 }
