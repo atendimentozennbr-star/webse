@@ -8,7 +8,6 @@ const KEYS = {
   TRANSACTIONS: 'webse_transactions',
   GOALS: 'webse_goals',
   POMODORO_SESSIONS: 'webse_pomodoro_sessions',
-  AI_HISTORY: 'webse_ai_history',
   SETTINGS: 'webse_settings',
   MOTIVATIONAL_QUOTE: 'webse_quote'
 };
