@@ -131,129 +131,167 @@ async function renderDashboardContent() {
       </div>
     </div>
 
-    <div class="dashboard-kpi-row">
-      <div class="kpi-card glass-card" onclick="navigateTo('tasks')">
-        <div class="kpi-icon kpi-purple">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-        </div>
-        <div class="kpi-info">
-          <span class="kpi-value">${taskStats.pending || 0}</span>
-          <span class="kpi-label">Tarefas Pendentes</span>
-        </div>
-        ${taskStats.overdue > 0 ? `<span class="kpi-badge kpi-badge-danger">${taskStats.overdue} atrasadas</span>` : ''}
-      </div>
-      <div class="kpi-card glass-card" onclick="navigateTo('habits')">
-        <div class="kpi-icon kpi-blue">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-        </div>
-        <div class="kpi-info">
-          <span class="kpi-value">${habitSummary.doneToday || 0}<span class="kpi-value-sub">/${habitSummary.totalHabits || 0}</span></span>
-          <span class="kpi-label">Hábitos Hoje</span>
-        </div>
-        ${habitSummary.topStreak?.streak > 0 ? `<span class="kpi-badge kpi-badge-fire">🔥 ${habitSummary.topStreak.streak}d</span>` : ''}
-      </div>
-      <div class="kpi-card glass-card" onclick="navigateTo('finance')">
-        <div class="kpi-icon kpi-green">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-        </div>
-        <div class="kpi-info">
-          <span class="kpi-value kpi-currency ${(financeSummary.balance || 0) >= 0 ? 'income-value' : 'expense-value'}">${formatCurrency(financeSummary.balance || 0)}</span>
-          <span class="kpi-label">Saldo do Mês</span>
-        </div>
-      </div>
-      <div class="kpi-card glass-card" onclick="navigateTo('goals')">
-        <div class="kpi-icon kpi-orange">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-        </div>
-        <div class="kpi-info">
-          <span class="kpi-value">${activeGoals.length}</span>
-          <span class="kpi-label">Metas Ativas</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="dashboard-charts-row">
-      <div class="dash-chart-card glass-card">
-        <h3 class="dash-chart-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-          Balanço Financeiro (6 meses)
-        </h3>
-        <div class="dash-chart-wrapper">
-          <canvas id="dashboard-finance-chart"></canvas>
-        </div>
-      </div>
-      <div class="dash-chart-card glass-card">
-        <h3 class="dash-chart-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20"></path></svg>
-          Progresso Geral
-        </h3>
-        <div class="dash-donuts-row">
-          <div class="dash-donut-item">
-            <canvas id="dashboard-tasks-donut" width="120" height="120"></canvas>
-            <span class="dash-donut-label">Tarefas ${taskCompletionPct}%</span>
+    <!-- Resumo Rápido -->
+    <div class="dash-section">
+      <h2 class="dash-section-label">Resumo</h2>
+      <div class="dashboard-kpi-row">
+        <div class="kpi-card glass-card" onclick="navigateTo('tasks')">
+          <div class="kpi-icon kpi-purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
           </div>
-          <div class="dash-donut-item">
-            <canvas id="dashboard-habits-donut" width="120" height="120"></canvas>
-            <span class="dash-donut-label">Hábitos ${habitPct}%</span>
+          <div class="kpi-info">
+            <span class="kpi-value">${taskStats.pending || 0}</span>
+            <span class="kpi-label">Tarefas Pendentes</span>
           </div>
-          <div class="dash-donut-item">
-            <canvas id="dashboard-expenses-donut" width="120" height="120"></canvas>
-            <span class="dash-donut-label">Despesas por Cat.</span>
+          ${taskStats.overdue > 0 ? `<span class="kpi-badge kpi-badge-danger">${taskStats.overdue} atrasadas</span>` : ''}
+        </div>
+        <div class="kpi-card glass-card" onclick="navigateTo('habits')">
+          <div class="kpi-icon kpi-blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+          </div>
+          <div class="kpi-info">
+            <span class="kpi-value">${habitSummary.doneToday || 0}<span class="kpi-value-sub">/${habitSummary.totalHabits || 0}</span></span>
+            <span class="kpi-label">Hábitos Hoje</span>
+          </div>
+          ${habitSummary.topStreak?.streak > 0 ? `<span class="kpi-badge kpi-badge-fire">🔥 ${habitSummary.topStreak.streak}d</span>` : ''}
+        </div>
+        <div class="kpi-card glass-card" onclick="navigateTo('finance')">
+          <div class="kpi-icon kpi-green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+          </div>
+          <div class="kpi-info">
+            <span class="kpi-value kpi-currency ${(financeSummary.balance || 0) >= 0 ? 'income-value' : 'expense-value'}">${formatCurrency(financeSummary.balance || 0)}</span>
+            <span class="kpi-label">Saldo do Mês</span>
+          </div>
+        </div>
+        <div class="kpi-card glass-card" onclick="navigateTo('goals')">
+          <div class="kpi-icon kpi-orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+          </div>
+          <div class="kpi-info">
+            <span class="kpi-value">${activeGoals.length}</span>
+            <span class="kpi-label">Metas Ativas</span>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="dashboard-bottom-row">
-      <div class="dash-panel glass-card dash-panel-tasks" onclick="navigateTo('tasks')">
-        <h3 class="dash-panel-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-          Tarefas de Hoje
-        </h3>
-        ${todayTasks.length > 0 ? `
-          <div class="dash-task-list">
-            ${todayTasks.slice(0, 5).map(t => `
-              <div class="dash-task-item priority-${t.priority}">
-                <span class="w-task-dot"></span>
-                <span class="dash-task-title">${escapeHtml(truncate(t.title, 40))}</span>
-                <span class="dash-task-badge badge-${t.priority}">${TASK_PRIORITIES[t.priority] || t.priority}</span>
-              </div>
-            `).join('')}
-          </div>
-        ` : '<p class="text-muted dash-empty">Nenhuma tarefa para hoje. Aproveite para planejar! 🎯</p>'}
-      </div>
-
-      <div class="dash-panel glass-card dash-panel-goals">
-        <h3 class="dash-panel-title">
+    <!-- Ações Rápidas -->
+    <div class="dash-section">
+      <h2 class="dash-section-label">Ações Rápidas</h2>
+      <div class="dashboard-actions-row">
+        <button class="dash-action-btn dash-action-task" onclick="openTaskModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          Nova Tarefa
+        </button>
+        <button class="dash-action-btn dash-action-tx" onclick="openTransactionModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          Lançamento
+        </button>
+        <button class="dash-action-btn dash-action-pomo" onclick="navigateTo('pomodoro')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Pomodoro
+        </button>
+        <button class="dash-action-btn dash-action-goal" onclick="openGoalModal()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-          Progresso das Metas
-        </h3>
-        ${activeGoals.length === 0
-          ? '<p class="text-muted dash-empty">Defina metas para acompanhar seu progresso! 🚀</p>'
-          : `<div class="dash-goals-list">
-              ${activeGoals.map(g => {
-                const pct = getGoalProgress ? getGoalProgress(g) : 0;
-                return `
-                  <div class="dash-goal-item" onclick="navigateTo('goals')">
-                    <div class="dash-goal-info">
-                      <span class="dash-goal-name">${escapeHtml(truncate(g.title, 30))}</span>
-                      <span class="dash-goal-pct">${pct}%</span>
-                    </div>
-                    <div class="progress-bar">
-                      <div class="progress-fill" style="width: ${pct}%; background: linear-gradient(90deg, ${pct >= 70 ? '#10b981' : pct >= 40 ? '#f59e0b' : '#7c3aed'}, ${pct >= 70 ? '#059669' : pct >= 40 ? '#ef4444' : '#4f46e5'})"></div>
-                    </div>
-                  </div>
-                `;
-              }).join('')}
-            </div>`}
+          Nova Meta
+        </button>
       </div>
+    </div>
 
+    <!-- Atividades do Dia -->
+    <div class="dash-section">
+      <h2 class="dash-section-label">Hoje</h2>
+      <div class="dashboard-today-row">
+        <div class="dash-panel glass-card dash-panel-tasks" onclick="navigateTo('tasks')">
+          <h3 class="dash-panel-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+            Tarefas de Hoje
+          </h3>
+          ${todayTasks.length > 0 ? `
+            <div class="dash-task-list">
+              ${todayTasks.slice(0, 5).map(t => `
+                <div class="dash-task-item priority-${t.priority}">
+                  <span class="w-task-dot"></span>
+                  <span class="dash-task-title">${escapeHtml(truncate(t.title, 40))}</span>
+                  <span class="dash-task-badge badge-${t.priority}">${TASK_PRIORITIES[t.priority] || t.priority}</span>
+                </div>
+              `).join('')}
+            </div>
+          ` : '<p class="text-muted dash-empty">Nenhuma tarefa para hoje. Aproveite para planejar! 🎯</p>'}
+        </div>
+        <div class="dash-panel glass-card dash-panel-goals">
+          <h3 class="dash-panel-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+            Progresso das Metas
+          </h3>
+          ${activeGoals.length === 0
+            ? '<p class="text-muted dash-empty">Defina metas para acompanhar seu progresso! 🚀</p>'
+            : `<div class="dash-goals-list">
+                ${activeGoals.map(g => {
+                  const pct = getGoalProgress ? getGoalProgress(g) : 0;
+                  return `
+                    <div class="dash-goal-item" onclick="navigateTo('goals')">
+                      <div class="dash-goal-info">
+                        <span class="dash-goal-name">${escapeHtml(truncate(g.title, 30))}</span>
+                        <span class="dash-goal-pct">${pct}%</span>
+                      </div>
+                      <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${pct}%; background: linear-gradient(90deg, ${pct >= 70 ? '#10b981' : pct >= 40 ? '#f59e0b' : '#7c3aed'}, ${pct >= 70 ? '#059669' : pct >= 40 ? '#ef4444' : '#4f46e5'})"></div>
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>`}
+        </div>
+      </div>
+    </div>
+
+    <!-- Gráficos e Análise -->
+    <div class="dash-section">
+      <h2 class="dash-section-label">Análise</h2>
+      <div class="dashboard-charts-row">
+        <div class="dash-chart-card glass-card">
+          <h3 class="dash-chart-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+            Balanço Financeiro (6 meses)
+          </h3>
+          <div class="dash-chart-wrapper">
+            <canvas id="dashboard-finance-chart"></canvas>
+          </div>
+        </div>
+        <div class="dash-chart-card glass-card">
+          <h3 class="dash-chart-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20"></path></svg>
+            Progresso Geral
+          </h3>
+          <div class="dash-donuts-row">
+            <div class="dash-donut-item">
+              <canvas id="dashboard-tasks-donut" width="120" height="120"></canvas>
+              <span class="dash-donut-label">Tarefas ${taskCompletionPct}%</span>
+            </div>
+            <div class="dash-donut-item">
+              <canvas id="dashboard-habits-donut" width="120" height="120"></canvas>
+              <span class="dash-donut-label">Hábitos ${habitPct}%</span>
+            </div>
+            <div class="dash-donut-item">
+              <canvas id="dashboard-expenses-donut" width="120" height="120"></canvas>
+              <span class="dash-donut-label">Despesas por Cat.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dicas Financeiras -->
+    <div class="dash-section">
+      <h2 class="dash-section-label">Dicas</h2>
       <div class="dash-panel glass-card dash-panel-tips">
         <h3 class="dash-panel-title">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
           Dicas Financeiras
         </h3>
-        <div class="dash-tips-list">
+        <div class="dash-tips-grid">
           ${financeTips.map(tip => `
             <div class="dash-tip-item">
               <span class="dash-tip-icon">${tip.icon}</span>
@@ -265,25 +303,6 @@ async function renderDashboardContent() {
           `).join('')}
         </div>
       </div>
-    </div>
-
-    <div class="dashboard-actions-row">
-      <button class="dash-action-btn dash-action-task" onclick="openTaskModal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-        Nova Tarefa
-      </button>
-      <button class="dash-action-btn dash-action-tx" onclick="openTransactionModal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-        Lançamento
-      </button>
-      <button class="dash-action-btn dash-action-pomo" onclick="navigateTo('pomodoro')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-        Pomodoro
-      </button>
-      <button class="dash-action-btn dash-action-goal" onclick="openGoalModal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-        Nova Meta
-      </button>
     </div>
   `;
 
