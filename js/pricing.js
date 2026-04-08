@@ -100,11 +100,9 @@ function calculateTotalPlanRevenue() {
     .reduce((sum, p) => sum + (p.monthlyPrice || 0), 0);
 }
 
-// Calcula receita mensal (usa preço mensal de cada plano ativo)
+// Alias para compatibilidade com diferentes bases de cálculo
 function calculateMonthlyPlanRevenue() {
-  return pricingPlans
-    .filter(p => p.isActive)
-    .reduce((sum, p) => sum + (p.monthlyPrice || 0), 0);
+  return calculateTotalPlanRevenue();
 }
 
 // === Simulação de Receita ===
@@ -261,7 +259,7 @@ function renderPricingSection() {
 // Renderiza card de plano
 function renderPlanCard(plan) {
   const features = plan.features || [];
-  const annualSaving = plan.annualPrice > 0
+  const annualSaving = plan.annualPrice > 0 && plan.monthlyPrice > 0
     ? Math.round(100 - (plan.annualPrice / (plan.monthlyPrice * 12)) * 100)
     : 0;
 
