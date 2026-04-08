@@ -290,7 +290,7 @@ async function renderDashboardContent() {
             <span class="dash-pricing-stat-label">Pró-Labore</span>
           </div>
           <div class="dash-pricing-stat">
-            <span class="dash-pricing-stat-value income-value">${formatCurrency(pricingMonthlyRevenue - proLaboreValue)}</span>
+            <span class="dash-pricing-stat-value ${(pricingMonthlyRevenue - proLaboreValue) >= 0 ? 'income-value' : 'expense-value'}">${formatCurrency(pricingMonthlyRevenue - proLaboreValue)}</span>
             <span class="dash-pricing-stat-label">Líquido</span>
           </div>
         </div>
