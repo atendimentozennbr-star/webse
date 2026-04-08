@@ -78,7 +78,7 @@ function navigateTo(section) {
   // Atualiza título da aba (apenas se não estiver no pomodoro)
   if (pomodoroState?.mode !== 'working' || !pomodoroState?.isRunning) {
     const titles = {
-      dashboard: 'Dashboard', tasks: 'Tarefas', habits: 'Hábitos',
+      dashboard: 'Painel', tasks: 'Tarefas', habits: 'Hábitos',
       calendar: 'Calendário', finance: 'Finanças', goals: 'Metas',
       pomodoro: 'Pomodoro', pricing: 'Precificação', settings: 'Configurações'
     };
@@ -122,6 +122,11 @@ async function renderDashboardContent() {
   const greetingHour = new Date().getHours();
   const greeting = greetingHour < 12 ? 'Bom dia' : greetingHour < 18 ? 'Boa tarde' : 'Boa noite';
 
+  // Pricing data for dashboard
+  const pricingActivePlans = typeof pricingPlans !== 'undefined' ? pricingPlans.filter(p => p.isActive).length : 0;
+  const pricingMonthlyRevenue = typeof calculateMonthlyPlanRevenue === 'function' ? calculateMonthlyPlanRevenue() : 0;
+  const proLaboreValue = typeof calculateProLabore === 'function' ? calculateProLabore() : 0;
+
   container.innerHTML = `
     <div class="dashboard-hero">
       <div class="dashboard-hero-content">
@@ -133,9 +138,9 @@ async function renderDashboardContent() {
       </div>
     </div>
 
-    <!-- Resumo Rápido -->
+    <!-- Visão Geral -->
     <div class="dash-section">
-      <h2 class="dash-section-label">Resumo</h2>
+      <h2 class="dash-section-label">Visão Geral</h2>
       <div class="dashboard-kpi-row">
         <div class="kpi-card glass-card" onclick="navigateTo('tasks')">
           <div class="kpi-icon kpi-purple">
@@ -148,7 +153,7 @@ async function renderDashboardContent() {
           ${taskStats.overdue > 0 ? `<span class="kpi-badge kpi-badge-danger">${taskStats.overdue} atrasadas</span>` : ''}
         </div>
         <div class="kpi-card glass-card" onclick="navigateTo('habits')">
-          <div class="kpi-icon kpi-blue">
+          <div class="kpi-icon kpi-cyan">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
           </div>
           <div class="kpi-info">
@@ -175,6 +180,16 @@ async function renderDashboardContent() {
             <span class="kpi-label">Metas Ativas</span>
           </div>
         </div>
+        <div class="kpi-card glass-card" onclick="navigateTo('pricing')">
+          <div class="kpi-icon kpi-pink">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+          </div>
+          <div class="kpi-info">
+            <span class="kpi-value">${pricingActivePlans}</span>
+            <span class="kpi-label">Planos Ativos</span>
+          </div>
+          ${pricingMonthlyRevenue > 0 ? `<span class="kpi-badge kpi-badge-revenue">${formatCurrency(pricingMonthlyRevenue)}/mês</span>` : ''}
+        </div>
       </div>
     </div>
 
@@ -197,6 +212,10 @@ async function renderDashboardContent() {
         <button class="dash-action-btn dash-action-goal" onclick="openGoalModal()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
           Nova Meta
+        </button>
+        <button class="dash-action-btn dash-action-pricing" onclick="openPlanModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+          Novo Plano
         </button>
       </div>
     </div>
@@ -239,12 +258,41 @@ async function renderDashboardContent() {
                         <span class="dash-goal-pct">${pct}%</span>
                       </div>
                       <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${pct}%; background: linear-gradient(90deg, ${pct >= 70 ? '#10b981' : pct >= 40 ? '#f59e0b' : '#7c3aed'}, ${pct >= 70 ? '#059669' : pct >= 40 ? '#ef4444' : '#4f46e5'})"></div>
+                        <div class="progress-fill" style="width: ${pct}%; background: linear-gradient(90deg, ${pct >= 70 ? '#10b981' : pct >= 40 ? '#f59e0b' : '#6366f1'}, ${pct >= 70 ? '#059669' : pct >= 40 ? '#ef4444' : '#4f46e5'})"></div>
                       </div>
                     </div>
                   `;
                 }).join('')}
               </div>`}
+        </div>
+      </div>
+    </div>
+
+    <!-- Precificação -->
+    <div class="dash-section">
+      <h2 class="dash-section-label">Precificação</h2>
+      <div class="dash-panel glass-card dash-panel-pricing" onclick="navigateTo('pricing')">
+        <h3 class="dash-panel-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+          Resumo de Precificação
+        </h3>
+        <div class="dash-pricing-grid">
+          <div class="dash-pricing-stat">
+            <span class="dash-pricing-stat-value">${pricingActivePlans}</span>
+            <span class="dash-pricing-stat-label">Planos Ativos</span>
+          </div>
+          <div class="dash-pricing-stat">
+            <span class="dash-pricing-stat-value income-value">${formatCurrency(pricingMonthlyRevenue)}</span>
+            <span class="dash-pricing-stat-label">Receita Mensal</span>
+          </div>
+          <div class="dash-pricing-stat">
+            <span class="dash-pricing-stat-value">${proLaboreValue > 0 ? formatCurrency(proLaboreValue) : 'N/D'}</span>
+            <span class="dash-pricing-stat-label">Pró-Labore</span>
+          </div>
+          <div class="dash-pricing-stat">
+            <span class="dash-pricing-stat-value ${(pricingMonthlyRevenue - proLaboreValue) >= 0 ? 'income-value' : 'expense-value'}">${formatCurrency(pricingMonthlyRevenue - proLaboreValue)}</span>
+            <span class="dash-pricing-stat-label">Líquido</span>
+          </div>
         </div>
       </div>
     </div>
@@ -285,13 +333,13 @@ async function renderDashboardContent() {
       </div>
     </div>
 
-    <!-- Dicas Financeiras -->
+    <!-- Dicas Inteligentes -->
     <div class="dash-section">
-      <h2 class="dash-section-label">Dicas</h2>
+      <h2 class="dash-section-label">Dicas Inteligentes</h2>
       <div class="dash-panel glass-card dash-panel-tips">
         <h3 class="dash-panel-title">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-          Dicas Financeiras
+          Insights Financeiros
         </h3>
         <div class="dash-tips-grid">
           ${financeTips.map(tip => `
@@ -437,7 +485,7 @@ function renderDashboardTasksDonut(taskStats) {
           backgroundColor: 'rgba(15, 14, 23, 0.9)',
           titleColor: '#e2e8f0',
           bodyColor: '#94a3b8',
-          borderColor: 'rgba(124, 58, 237, 0.3)',
+          borderColor: 'rgba(99, 102, 241, 0.3)',
           borderWidth: 1,
           cornerRadius: 8,
           padding: 8,
@@ -478,8 +526,8 @@ function renderDashboardHabitsDonut(habitSummary) {
       labels: ['Feitos', 'Restantes'],
       datasets: [{
         data: [done, remaining],
-        backgroundColor: ['rgba(124, 58, 237, 0.7)', 'rgba(255, 255, 255, 0.06)'],
-        borderColor: ['#7c3aed', 'rgba(255, 255, 255, 0.12)'],
+        backgroundColor: ['rgba(99, 102, 241, 0.7)', 'rgba(255, 255, 255, 0.06)'],
+        borderColor: ['#6366f1', 'rgba(255, 255, 255, 0.12)'],
         borderWidth: 2,
         hoverOffset: 6,
         spacing: 2
@@ -501,7 +549,7 @@ function renderDashboardHabitsDonut(habitSummary) {
           backgroundColor: 'rgba(15, 14, 23, 0.9)',
           titleColor: '#e2e8f0',
           bodyColor: '#94a3b8',
-          borderColor: 'rgba(124, 58, 237, 0.3)',
+          borderColor: 'rgba(99, 102, 241, 0.3)',
           borderWidth: 1,
           cornerRadius: 8,
           padding: 8,
@@ -566,7 +614,7 @@ function renderDashboardExpensesDonut() {
           backgroundColor: 'rgba(15, 14, 23, 0.9)',
           titleColor: '#e2e8f0',
           bodyColor: '#94a3b8',
-          borderColor: 'rgba(124, 58, 237, 0.3)',
+          borderColor: 'rgba(99, 102, 241, 0.3)',
           borderWidth: 1,
           cornerRadius: 8,
           padding: 8,

@@ -6,7 +6,7 @@ let habitsRadarChart = null;
 let goalsBarChart = null;
 
 // Configuração padrão de cores escuras para os gráficos
-const CHART_COLORS = ['#7c3aed', '#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#ec4899', '#06b6d4', '#84cc16'];
+const CHART_COLORS = ['#6366f1', '#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#ec4899', '#06b6d4', '#84cc16'];
 
 // Configuração padrão para tema escuro
 const CHART_DEFAULTS = {
@@ -277,9 +277,9 @@ function updateHabitChart(habits, logs) {
         label: 'Taxa de conclusão (%)',
         data: habitRates.map(h => h.rate),
         backgroundColor: 'rgba(124, 58, 237, 0.2)',
-        borderColor: '#7c3aed',
+        borderColor: '#6366f1',
         borderWidth: 2.5,
-        pointBackgroundColor: '#7c3aed',
+        pointBackgroundColor: '#6366f1',
         pointBorderColor: '#fff',
         pointBorderWidth: 2,
         pointRadius: 5,
@@ -439,12 +439,12 @@ function renderDashboardFinanceChart() {
           label: 'Saldo',
           data: data.map(d => d.income - d.expense),
           type: 'line',
-          borderColor: '#7c3aed',
+          borderColor: '#6366f1',
           backgroundColor: 'rgba(124, 58, 237, 0.08)',
           borderWidth: 2.5,
           fill: true,
           tension: 0.4,
-          pointBackgroundColor: '#7c3aed',
+          pointBackgroundColor: '#6366f1',
           pointBorderColor: '#1a1a2e',
           pointBorderWidth: 2,
           pointRadius: 5,
