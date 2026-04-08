@@ -2539,3 +2539,305 @@ body::before {
   from { transform: scaleX(0); transform-origin: left; }
   to { transform: scaleX(1); transform-origin: left; }
 }
+
+/* =============================================
+   PRECIFICAÇÃO - Pricing Section
+   ============================================= */
+
+.pricing-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.pricing-section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.pricing-section-label svg {
+  width: 20px;
+  height: 20px;
+  color: var(--accent-purple);
+}
+
+.pricing-plans-section {
+  margin-bottom: 24px;
+}
+
+.pricing-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.pricing-plan-card {
+  position: relative;
+  padding: 24px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+
+.pricing-plan-card:hover {
+  border-color: var(--accent-purple);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.15);
+}
+
+.pricing-plan-card.plan-popular {
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 0 1px var(--accent-purple), 0 8px 24px rgba(124, 58, 237, 0.15);
+}
+
+.pricing-plan-card.plan-inactive {
+  opacity: 0.6;
+}
+
+.plan-badge {
+  position: absolute;
+  top: -10px;
+  right: 16px;
+  background: var(--gradient-purple);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.plan-badge-inactive {
+  background: var(--gradient-orange);
+}
+
+.plan-card-header {
+  margin-bottom: 16px;
+}
+
+.plan-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.plan-description {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.plan-pricing {
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.plan-price-main {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.plan-currency {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent-green);
+}
+
+.plan-amount {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.plan-period {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-left: 2px;
+}
+
+.plan-price-annual {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.plan-saving {
+  display: inline-block;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--accent-green);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.plan-users {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.plan-users svg {
+  color: var(--accent-blue);
+}
+
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+  flex-grow: 1;
+}
+
+.plan-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.plan-feature-item svg {
+  color: var(--accent-green);
+  flex-shrink: 0;
+}
+
+.plan-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Pró-Labore Section */
+.prolabore-section {
+  padding: 24px;
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+}
+
+.prolabore-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.prolabore-header .pricing-section-label {
+  margin-bottom: 0;
+}
+
+.prolabore-description {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.prolabore-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.prolabore-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+.prolabore-detail-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.prolabore-detail-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.prolabore-empty {
+  text-align: center;
+  padding: 16px;
+}
+
+/* Checkbox label styling */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent-purple);
+  cursor: pointer;
+}
+
+.section-header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+}
+
+/* Mobile responsiveness for pricing */
+@media (max-width: 768px) {
+  .pricing-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pricing-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .prolabore-details {
+    grid-template-columns: 1fr;
+  }
+
+  .prolabore-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pricing-summary {
+    grid-template-columns: 1fr;
+  }
+}

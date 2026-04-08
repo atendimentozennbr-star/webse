@@ -23,6 +23,7 @@ function initAllModules() {
   initFinance();
   initGoals();
   initPomodoro();
+  initPricing();
   loadSettings();
 }
 
@@ -79,7 +80,7 @@ function navigateTo(section) {
     const titles = {
       dashboard: 'Dashboard', tasks: 'Tarefas', habits: 'Hábitos',
       calendar: 'Calendário', finance: 'Finanças', goals: 'Metas',
-      pomodoro: 'Pomodoro', settings: 'Configurações'
+      pomodoro: 'Pomodoro', pricing: 'Precificação', settings: 'Configurações'
     };
     document.title = `${titles[section] || section} | ZennBR`;
   }
@@ -93,6 +94,7 @@ function navigateTo(section) {
     case 'finance': renderFinanceSection(); setTimeout(() => updateFinanceCharts(), 100); break;
     case 'goals': renderGoalsSection(); setTimeout(() => updateGoalsChart(), 100); break;
     case 'pomodoro': renderPomodoroSection(); break;
+    case 'pricing': renderPricingSection(); break;
     case 'settings': renderSettingsSection(); break;
   }
 }
