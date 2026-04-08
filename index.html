@@ -104,6 +104,16 @@
         <span class="nav-label">Pomodoro</span>
       </button>
 
+      <button class="nav-item" data-section="pricing" onclick="navigateTo('pricing')">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+            <line x1="7" y1="7" x2="7.01" y2="7"></line>
+          </svg>
+        </span>
+        <span class="nav-label">Precificação</span>
+      </button>
+
 
     </div>
 
@@ -228,6 +238,16 @@
           <div class="empty-state">
             <div class="empty-icon">🍅</div>
             <p>Carregando Pomodoro...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRECIFICAÇÃO -->
+      <section id="section-pricing" class="section">
+        <div id="pricing-container">
+          <div class="empty-state">
+            <div class="empty-icon">🏷️</div>
+            <p>Carregando precificação...</p>
           </div>
         </div>
       </section>
@@ -535,6 +555,120 @@
   </div>
 </div>
 
+<!-- Modal de Plano de Precificação -->
+<div class="modal-overlay" id="plan-modal" onclick="if(event.target===this)closePlanModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="plan-modal-title">Novo Plano</h3>
+      <button class="modal-close" onclick="closePlanModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Nome do Plano *</label>
+        <input type="text" class="filter-input" id="plan-name-input" placeholder="Ex: Básico, Pro, Enterprise" maxlength="100">
+      </div>
+      <div class="form-group">
+        <label>Descrição</label>
+        <input type="text" class="filter-input" id="plan-desc-input" placeholder="Breve descrição do plano" maxlength="200">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Preço Mensal (R$) *</label>
+          <input type="number" class="filter-input" id="plan-monthly-input" placeholder="0,00" min="0.01" step="0.01">
+        </div>
+        <div class="form-group">
+          <label>Preço Anual (R$)</label>
+          <input type="number" class="filter-input" id="plan-annual-input" placeholder="0,00" min="0" step="0.01">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Máximo de Usuários</label>
+        <input type="text" class="filter-input" id="plan-maxusers-input" placeholder="Ex: 5, 10, Ilimitado" maxlength="50">
+      </div>
+      <div class="form-group">
+        <label>Funcionalidades (uma por linha)</label>
+        <textarea id="plan-features-input" placeholder="Suporte por email&#10;Dashboard avançado&#10;Relatórios ilimitados" rows="4"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="plan-popular-input">
+            <span>Marcar como Popular</span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="plan-active-input" checked>
+            <span>Plano Ativo</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closePlanModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="savePlanFromModal()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Pró-Labore -->
+<div class="modal-overlay" id="prolabore-modal" onclick="if(event.target===this)closeProLaboreModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Configurar Pró-Labore</h3>
+      <button class="modal-close" onclick="closeProLaboreModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="prolabore-enabled-input">
+          <span>Ativar Pró-Labore</span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label>Tipo de Cálculo</label>
+        <select class="filter-select" id="prolabore-type-input" onchange="toggleProLaboreFields()">
+          <option value="fixed">Valor Fixo</option>
+          <option value="percentage">Percentual da Receita</option>
+        </select>
+      </div>
+      <div class="form-group" id="prolabore-fixed-group">
+        <label>Valor Fixo Mensal (R$)</label>
+        <input type="number" class="filter-input" id="prolabore-fixed-input" placeholder="0,00" min="0" step="0.01">
+      </div>
+      <div class="form-group" id="prolabore-pct-group" style="display:none">
+        <label>Percentual (%)</label>
+        <input type="number" class="filter-input" id="prolabore-pct-input" placeholder="Ex: 28" min="0" max="100" step="0.1">
+      </div>
+      <div class="form-group" id="prolabore-base-group" style="display:none">
+        <label>Base de Cálculo</label>
+        <select class="filter-select" id="prolabore-base-input">
+          <option value="total">Receita Total dos Planos</option>
+          <option value="monthly">Receita Mensal</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Observação</label>
+        <textarea id="prolabore-desc-input" placeholder="Anotações sobre o pró-labore..." rows="2"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeProLaboreModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveProLaboreFromModal()">Salvar</button>
+    </div>
+  </div>
+</div>
+
 <!-- Toast container -->
 <div id="toast-container"></div>
 
@@ -559,6 +693,7 @@
 <script src="js/finance.js"></script>
 <script src="js/goals.js"></script>
 <script src="js/pomodoro.js"></script>
+<script src="js/pricing.js"></script>
 
 <script src="js/app.js"></script>
 
